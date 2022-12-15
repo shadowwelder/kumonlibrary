@@ -1,0 +1,20 @@
+.scroll-bar:vertical,
+.scroll-bar:vertical .track,
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal,
+.scroll-bar:horizontal .track,
+.scroll-bar:horizontal .track-background {
+    -fx-background-color: #afe9ff;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+
+}
+
+.scroll-bar:vertical .thumb{
+    -fx-background-color:  linear-gradient(to bottom, #1dbbdd44, #1dbbdd44);
+}
+.scroll-bar:horizontal .thumb {
+    -fx-background-color:  linear-gradient(to right, #1dbbdd44, #1dbbdd44);
+}

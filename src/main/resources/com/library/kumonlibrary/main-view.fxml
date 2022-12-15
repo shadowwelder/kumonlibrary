@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+
+<VBox onKeyPressed="#initialize" prefHeight="600.0" prefWidth="971.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.kumonlibrary.MainController">
+  <children>
+    <MenuBar nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #b2e8f5;" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+                  <MenuItem fx:id="addBookMenu" mnemonicParsing="false" onAction="#onAddBookMenu" text="Add Books" />
+            <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetStuff" text="setStuff" />
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="Inventory">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onPrintCheckedOut" text="Print Checked Out" />
+              </items>
+            </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane dividerPositions="0.23526370217166495, 0.7616339193381593" focusTraversable="true" prefWidth="951.0" style="-fx-background-color: #b2e1f5; -fx-border-color: #b2e1f5;" stylesheets="@divider.css" VBox.vgrow="ALWAYS">
+      <items>
+            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #c9eff8;">
+               <children>
+                  <HBox prefHeight="75.0" prefWidth="221.0">
+                     <children>
+                  <Label alignment="CENTER" minWidth="60.0" prefHeight="23.0" prefWidth="76.0" style="&#10;" text="Students" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+                    <font>
+                      <Font size="18.0" fx:id="x1" />
+                    </font>
+                           <HBox.margin>
+                              <Insets top="4.0" />
+                           </HBox.margin>
+                  </Label>
+                        <TextField fx:id="search" prefHeight="26.0" prefWidth="143.0" promptText="Search ID or Name" style="-fx-background-color: #ffffff;" stylesheets="@textfield.css">
+                           <HBox.margin>
+                              <Insets right="4.0" top="4.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <Separator opacity="0.0" prefHeight="38.0" prefWidth="221.0" />
+                  <HBox prefHeight="22.0" prefWidth="221.0" style="-fx-background-color: #92cbdf;">
+                     <children>
+                        <JFXButton fx:id="viewUsers" alignment="TOP_RIGHT" onAction="#onViewUsers" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #d3eaf2;" text="View Students">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin></JFXButton>
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="26.0" prefWidth="33.0" />
+                        <JFXButton onAction="#onSearchUsers" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #d3eaf2;" text="Search" />
+                     </children>
+                  </HBox>
+                  <JFXListView fx:id="userListView" prefHeight="538.0" prefWidth="221.0" style="-fx-background-color: #e0f6ff;" />
+                  <HBox prefHeight="0.0" prefWidth="221.0">
+                     <children>
+                        <JFXButton fx:id="signUpButton" buttonType="RAISED" onAction="#onNewUser" prefHeight="18.0" prefWidth="87.0" style="-fx-background-color: #c8dde6;" text="New">
+                           <font>
+                              <Font name="Kefa Regular" size="13.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="24.0" prefWidth="47.0" />
+                        <JFXButton fx:id="SelectUser" buttonType="RAISED" onAction="#onSelectUser" prefHeight="24.0" prefWidth="91.0" style="-fx-background-color: #c8dde6;" text="Select">
+                           <font>
+                              <Font name="Kefa Regular" size="13.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <StackPane fx:id="stackPane">
+               <children>
+                  <VBox fx:id="signUpVbox" prefHeight="520.0" prefWidth="442.0" style="-fx-background-color: #e0f6ff;">
+                     <children>
+                <Label alignment="TOP_LEFT" style="&#10;" text="Student Sign Up" textAlignment="CENTER" wrapText="false">
+                           <font>
+                              <Font size="18.0" fx:id="x5" />
+                           </font>
+                           <textFill>
+                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x6" />
+                           </textFill>
+                        </Label>
+                        <Separator opacity="0.0" prefHeight="0.0" prefWidth="442.0" />
+                        <HBox prefHeight="0.0" prefWidth="443.0">
+                           <children>
+                              <Label prefHeight="41.0" prefWidth="104.0" text="Name:">
+                                 <font>
+                                    <Font name="Plantagenet Cherokee" size="20.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="signUpFirstName" prefHeight="26.0" prefWidth="193.0" stylesheets="@textfield.css" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="21.0" prefWidth="442.0">
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="64.0" text="DOB:">
+                                 <font>
+                                    <Font name="Plantagenet Cherokee" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Separator opacity="0.0" orientation="VERTICAL" prefHeight="26.0" prefWidth="39.0" />
+                              <TextField fx:id="brandNewSignUpDOB" prefHeight="26.0" prefWidth="193.0" stylesheets="@textfield.css" />
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="73.0" prefHeight="21.0" prefWidth="442.0">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="103.0" text="Address:">
+                                 <font>
+                                    <Font name="Plantagenet Cherokee" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="signUpAddress" prefHeight="26.0" prefWidth="194.0" stylesheets="@textfield.css" />
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="21.0" prefWidth="442.0">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="102.0" text="Phone#">
+                                 <font>
+                                    <Font name="Plantagenet Cherokee" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="signUpPhone" prefHeight="26.0" prefWidth="194.0" stylesheets="@textfield.css" />
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox maxHeight="20.0" prefHeight="18.0" prefWidth="442.0">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="103.0" text="Email:">
+                                 <font>
+                                    <Font name="Plantagenet Cherokee" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="signUpEmail" prefHeight="26.0" prefWidth="193.0" stylesheets="@textfield.css" />
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox maxHeight="20.0" prefHeight="18.0" prefWidth="442.0">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="104.0" text="Level:">
+                                 <font>
+                                    <Font name="Plantagenet Cherokee" size="18.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="signUpLevel" focusColor="#c2ecfa" style="-fx-background-color: #99dff7;" stylesheets="@combobox.css" unFocusColor="#b9b9b9" />
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox maxHeight="20.0" prefHeight="18.0" prefWidth="442.0">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="103.0" text="ID #:">
+                                 <font>
+                                    <Font name="Plantagenet Cherokee" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="signUpID" prefHeight="26.0" prefWidth="352.0" stylesheets="@textfield.css" />
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </HBox>
+                        <VBox prefHeight="77.0" prefWidth="443.0">
+                           <children>
+                              <JFXButton fx:id="completeSignUp" onAction="#onCompleteSignUp" style="-fx-background-color: #5ed2ff;" text="Complete Sign Up">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                              <Separator opacity="0.0" prefHeight="8.0" prefWidth="443.0" />
+                              <JFXButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onReturnHome" style="-fx-background-color: #5ed2ff;" text="Return to Home" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="addBook" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #b2e1f5;">
+                     <children>
+                        <HBox prefHeight="33.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="50.0" prefWidth="88.0" text="Add Books" textFill="#9f9f9f">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="27.0" prefWidth="502.0" />
+                        <HBox prefHeight="35.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="35.0" prefWidth="83.0" text="  Name: ">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="addBookName" prefHeight="26.0" prefWidth="402.0" stylesheets="@textfield.css">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="37.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="37.0" prefWidth="84.0" text="  Author:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="addBookAuthor" prefHeight="26.0" prefWidth="252.0" stylesheets="@textfield.css">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="37.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="37.0" prefWidth="84.0" text="  Level: ">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="addBookLevel" focusColor="#c2ecfa" maxWidth="118.0" prefHeight="26.0" style="-fx-background-color: #99dff7;" unFocusColor="#b9b9b9" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="24.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="38.0" prefWidth="84.0" text="  Quantity:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="addBookQuantity" prefHeight="26.0" prefWidth="27.0" stylesheets="@textfield.css" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="35.0" prefWidth="83.0" text="  ISBN:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="addBookISBN" prefHeight="26.0" prefWidth="264.0" stylesheets="@textfield.css">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <JFXButton onAction="#onAddBooksButton" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #5ed2ff;" text="Confirm">
+                           <VBox.margin>
+                              <Insets left="201.0" top="5.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton onAction="#onReturnHome" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #5ed2ff;" text="Back to Home">
+                           <VBox.margin>
+                              <Insets left="201.0" top="10.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="userViewVbox" layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="442.0" style="-fx-background-color: #c9eff8;">
+                     <children>
+                        <Label alignment="TOP_LEFT" style="&#10;" text="Main View" textAlignment="CENTER" wrapText="false">
+                           <font>
+                              <Font size="18.0" fx:id="x51" />
+                           </font>
+                           <textFill>
+                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x61" />
+                           </textFill>
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Separator opacity="0.0" prefWidth="200.0" />
+                        <Text fx:id="welcomeLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME!">
+                           <font>
+                              <Font name="Bangla MN" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </Text>
+                        <Polygon fill="#0f4e8a" points="432.706298828125, -46.76057434082031, 374.91668701171875, -60.0, 0.0, -60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <ButtonBar buttonMinWidth="30.0" prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books checked out:" wrappingWidth="141.03125">
+                                 <font>
+                                    <Font name="Kohinoor Bangla" size="16.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="detailBooksCheckedOut" strokeType="OUTSIDE" strokeWidth="0.0" text="X" wrappingWidth="12.407999992370605">
+                                 <font>
+                                    <Font name="Kohinoor Bangla" size="16.0" />
+                                 </font>
+                              </Text>
+                              <JFXButton fx:id="viewCheckedOut" onAction="#onViewCheckedOut" prefHeight="26.0" style="-fx-background-color: #5ed2ff;" text="View Checked Out Books" />
+                              <JFXButton maxWidth="120.0" minWidth="30.0" onAction="#onBrowse" prefHeight="26.0" prefWidth="205.0" style="-fx-background-color: #5ed2ff;" text="Browse" />
+                          </buttons>
+                           <padding>
+                              <Insets left="-10.0" right="10.0" />
+                           </padding>
+                        </ButtonBar>
+                        <ButtonBar buttonMinWidth="30.0" prefHeight="40.0" prefWidth="200.0">
+                           <padding>
+                              <Insets left="-10.0" right="10.0" />
+                           </padding>
+                           <buttons>
+                              <JFXButton minWidth="15.0" onAction="#onCheckOut" prefHeight="26.0" prefWidth="355.0" style="-fx-background-color: #5ed2ff;" text="Check Out" />
+                              <JFXButton onAction="#onReturnBook" ripplerFill="BLACK" style="-fx-background-color: #5ed2ff;" text="Return" />
+                           </buttons>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="502.0">
+                           <buttons>
+                              <CustomTextField fx:id="searchBooks" maxWidth="339.0" minWidth="51.0" prefHeight="26.0" prefWidth="243.0" promptText="Search Books" style="-fx-background-color: #ffffff;" stylesheets="@textfield.css" />
+                              <JFXButton fx:id="searchBooksButton" maxWidth="133.0" onAction="#onSearchBook" prefHeight="26.0" prefWidth="583.0" style="-fx-background-color: #5ed2ff;" text="Search" />
+                              <JFXComboBox fx:id="levels" focusColor="#7284ba00" maxWidth="118.0" onAction="#onLevel" prefHeight="26.0" promptText="Level" style="-fx-background-color: #5ed2ff;" stylesheets="@combobox.css" unFocusColor="#4d4d4d00" />
+                           </buttons>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="-10.0" right="10.0" />
+                           </padding>
+                        </ButtonBar>
+                        <VBox prefHeight="405.0" prefWidth="437.0">
+                           <children>
+                              <StackPane fx:id="tableStackPane" prefHeight="330.0" prefWidth="437.0">
+                                 <children>
+                                    <VBox fx:id="checkedOutBooks" prefHeight="275.0" prefWidth="453.0" style="-fx-background-color: #c9eff8;">
+                                       <children>
+                                          <GridPane prefHeight="135.0" prefWidth="453.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="327.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="0.0" prefWidth="6.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="120.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="30.0" prefWidth="337.0" style="-fx-background-color: #F4f5f5;" text="Books Checked Out" />
+                                                <Label alignment="CENTER" prefHeight="46.0" prefWidth="120.0" style="-fx-background-color: #F4f5f5;" text="Date Checked Out" GridPane.columnIndex="2" />
+                                                <JFXListView fx:id="checkedOutBookList" GridPane.rowIndex="1" />
+                                                <JFXListView fx:id="checkedOutDateList" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                       <StackPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </StackPane.margin>
+                                    </VBox>
+                                    <TableView fx:id="books" editable="true" prefHeight="335.0" prefWidth="437.0" stylesheets="@table.css">
+                                      <columns>
+                                        <TableColumn fx:id="colBookName" prefWidth="185.20664978027344" text="Book Name" />
+                                        <TableColumn fx:id="colAuthorName" prefWidth="172.82315063476562" text="Author" />
+                                          <TableColumn fx:id="colAmountAvailable" minWidth="0.0" prefWidth="60.54730224609375" text="In Stock   " />
+                                          <TableColumn fx:id="colLevel" prefWidth="84.95269775390625" text="Level" />
+                                      </columns>
+                                       <StackPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </StackPane.margin>
+                                    </TableView>
+                                 </children>
+                              </StackPane>
+                              <HBox prefHeight="27.0" prefWidth="502.0">
+                                 <children>
+                                    <JFXButton minWidth="15.0" onAction="#onIncrease" prefHeight="23.0" prefWidth="29.0" style="-fx-background-color: #5ed2ff;" text="+">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                    <JFXButton minWidth="15.0" onAction="#onDecrease" prefHeight="23.0" prefWidth="29.0" style="-fx-background-color: #5ed2ff;" text="-">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                    <TextField fx:id="editBookTextField" prefHeight="26.0" prefWidth="163.0" stylesheets="@textfield.css" />
+                                    <JFXButton minWidth="15.0" onAction="#onEditBookName" prefHeight="26.0" prefWidth="79.0" style="-fx-background-color: #5ed2ff;" text="Edit Name">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                    <JFXButton minWidth="15.0" onAction="#onEditAuthorName" prefHeight="26.0" prefWidth="81.0" style="-fx-background-color: #5ed2ff;" text="Edit Author">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                    <JFXButton minWidth="15.0" onAction="#onDeleteBook" prefHeight="26.0" prefWidth="89.0" style="-fx-background-color: #5ed2ff;" text="Delete Book">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="32.0" prefWidth="502.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #c9eff8;">
+               <children>
+                  <Label text="Details" textFill="#9f9f9f">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="200.0" />
+                  <Label fx:id="detailName" text="Name">
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
+                     <font>
+                        <Font name="Kohinoor Bangla" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="detailMemberSince" text="Member Since: mm/dd/yy">
+                     <font>
+                        <Font name="Kohinoor Bangla" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="detailDOB" text="Date of Birth: mm/dd/yy">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                     <font>
+                        <Font name="Kohinoor Bangla" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="detailID" prefHeight="29.0" prefWidth="228.0" text="Student ID:">
+                     <font>
+                        <Font name="Kohinoor Bangla" size="9.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></Label>
+                  <Label text="Address:">
+                     <font>
+                        <Font name="Kohinoor Bangla" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="detailAddress" prefHeight="28.0" prefWidth="227.0" stylesheets="@textfield.css">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Separator prefHeight="20.0" prefWidth="220.0">
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Separator>
+                  <Label text="Phone Number:">
+                     <font>
+                        <Font name="Kohinoor Bangla" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="detailPhoneNumber" prefHeight="28.0" prefWidth="352.0" stylesheets="@textfield.css">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Separator prefHeight="20.0" prefWidth="220.0">
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Separator>
+                  <Label text="Email:">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Kohinoor Bangla" size="14.0" />
+                     </font></Label>
+                  <TextField fx:id="detailEmail" prefHeight="28.0" prefWidth="227.0" stylesheets="@textfield.css">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Separator prefHeight="20.0" prefWidth="220.0">
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Separator>
+                  <Label text="Level:">
+                     <font>
+                        <Font name="Kohinoor Bangla" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXComboBox fx:id="detailLevel" focusColor="#c2ecfa" style="-fx-background-color: #99dff7;" stylesheets="@combobox.css" unFocusColor="#b9b9b9">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </JFXComboBox>
+                  <HBox prefHeight="47.0" prefWidth="209.0">
+                     <children>
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
+                        <JFXButton fx:id="confirmUpdate" onAction="#onConfirm" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #5ed2ff;" text="Confirm" />
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
+                        <JFXButton fx:id="deleteUser" onAction="#onDelete" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #5ed2ff;" text="Delete Account" />
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+      </items>
+    </SplitPane>
+  </children>
+</VBox>
