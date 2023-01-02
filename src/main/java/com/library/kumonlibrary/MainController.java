@@ -63,11 +63,13 @@ public class MainController extends Application {
     @FXML
     private MenuItem connectDB;
 
-    @FXML
+    @FXML 
     private Text welcomeLabel;
 
     @FXML
     private Label detailName;
+
+    private String currentStudent;
 
     @FXML
     private Label detailMemberSince;
@@ -234,28 +236,10 @@ public class MainController extends Application {
         List<String> userData = this.databaseManager.userSelected(selectedItem);
         sb.append(userData.get(0));
         String sba = sb.toString();
-        welcomeLabel.setText("Welcome " + sba);
+        welcomeLabel.setText("Selected: " + sba);
         sb.delete(0, 30);
-        System.out.println(sb);
-        sb.append(userData.get(0));
-        detailName.setText(String.valueOf(sb));
-        updateName = (String.valueOf(sb));
-        sb.delete(0, 30);
-        detailMemberSince.setText(String.valueOf(sb.append("Member Since: ").append(userData.get(1))));
-        sb.delete(0, 30);
-        detailDOB.setText(String.valueOf(sb.append("Date of Birth:  ").append(userData.get(2))));
-        sb.delete(0, 30);
-        detailAddress.setText(String.valueOf(sb.append(userData.get(3))));
-        sb.delete(0, 30);
-        detailEmail.setText(String.valueOf(sb.append(userData.get(5))));
-        sb.delete(0, 30);
-        detailPhoneNumber.setText(String.valueOf(sb.append(userData.get(4))));
-        sb.delete(0, 30);
-        detailBooksCheckedOut.setText(String.valueOf(sb.append(userData.get(8))));
-        sb.delete(0, 30);
-        detailID.setText(String.valueOf(sb.append("Student ID:").append(userData.get(6))));
-
-        detailLevel.setValue(String.valueOf(userData.get(7)));
+        detailBooksCheckedOut.setText(userData.get(1));
+        currentStudent = userData.get(0);
         onBrowse();
     }
 
@@ -264,23 +248,11 @@ public class MainController extends Application {
     public void onCompleteSignUp() throws SQLException {
 
         String newUserName = signUpFirstName.getText();
-        String newSignUpDOB = brandNewSignUpDOB.getText();
-        String newUserSince = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yy"));
-        String newUserAddress = signUpAddress.getText();
-        String newUserPhone = signUpPhone.getText();
-        String newUserEmail = signUpEmail.getText();
-        String newUserLevel = (String) signUpLevel.getValue();
-        String newUserID = signUpID.getText();
 
-        databaseManager.newUserCreation(newUserName, newUserSince, newSignUpDOB, newUserAddress, newUserPhone, newUserEmail, newUserID, newUserLevel);
+        databaseManager.newUserCreation(newUserName);
         onReturnHome();
         onViewUsers();
 
-        signUpFirstName.setText("");
-        brandNewSignUpDOB.setText("");
-        signUpAddress.setText("");
-        signUpPhone.setText("");
-        signUpEmail.setText("");
 
         Notifications.create()
                 .title("Account Created")
@@ -309,11 +281,10 @@ public class MainController extends Application {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete your account?");
+        alert.setContentText("Are you sure you want to delete this student?");
         //Optional<ButtonType> result = alert.showAndWait();
         if (alert.showAndWait().get() == ButtonType.OK) {
-            databaseManager.deleteUser(updateName);
-            databaseManager.connectDB();
+            databaseManager.deleteUser(currentStudent);
             Notifications.create()
                     .title("Account Deleted :(")
                     .showInformation();
@@ -329,28 +300,28 @@ public class MainController extends Application {
         tableStackPane.getChildren().clear();
         tableStackPane.getChildren().add(checkedOutBooks);
 
-        ObservableList<String> checkedOutBooksObservable = FXCollections.observableArrayList(this.databaseManager.getCheckedOutBooks(detailName.getText()));
+        ObservableList<String> checkedOutBooksObservable = FXCollections.observableArrayList(this.databaseManager.getCheckedOutBooks(currentStudent));
         checkedOutBookList.setItems(checkedOutBooksObservable);
 
-        ObservableList<String> checkedOutDatesObservable = FXCollections.observableArrayList(this.databaseManager.getCheckedOutDates(detailName.getText()));
+        ObservableList<String> checkedOutDatesObservable = FXCollections.observableArrayList(this.databaseManager.getCheckedOutDates(currentStudent));
         checkedOutDateList.setItems(checkedOutDatesObservable);
     }
 
     @FXML
     private void onReturnBook() throws SQLException {
         String selectedItem = checkedOutBookList.getSelectionModel().getSelectedItem();
-        String thing1 = databaseManager.getCheckedOutBooks(detailName.getText()).get(0);
-        String thing2 = databaseManager.getCheckedOutBooks(detailName.getText()).get(1);
-        String thing3 = databaseManager.getCheckedOutBooks(detailName.getText()).get(2);
+        String thing1 = databaseManager.getCheckedOutBooks(currentStudent).get(0);
+        String thing2 = databaseManager.getCheckedOutBooks(currentStudent).get(1);
+        String thing3 = databaseManager.getCheckedOutBooks(currentStudent).get(2);
 
         if (Objects.equals(selectedItem, thing1)) {
-            databaseManager.returnBook("Book1", "DateCheckedOutBook1", detailName.getText(), selectedItem);
+            databaseManager.returnBook("Book1", "DateCheckedOutBook1", currentStudent, selectedItem);
         }
         if (Objects.equals(selectedItem, thing2)) {
-            databaseManager.returnBook("Book2", "DateCheckedOutBook2", detailName.getText(), selectedItem);
+            databaseManager.returnBook("Book2", "DateCheckedOutBook2", currentStudent, selectedItem);
         }
         if (Objects.equals(selectedItem, thing3)) {
-            databaseManager.returnBook("Book3", "DateCheckedOutBook3", detailName.getText(), selectedItem);
+            databaseManager.returnBook("Book3", "DateCheckedOutBook3", currentStudent, selectedItem);
         }
         Notifications.create()
                 .title("Book Returned!")
@@ -368,9 +339,9 @@ public class MainController extends Application {
 
         ObservableList<BookClub> bookList = databaseManager.getBooks();
         colBookName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("bookName"));
-        colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
+        //colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
         colAmountAvailable.setCellValueFactory(new PropertyValueFactory<BookClub, Integer>("amtAvailable"));
-        colLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
+        colLevel.setCellValueFactory(new PropertyValueFactory<BookClub, String>("level"));
         books.setItems(bookList);
     }
 
@@ -412,17 +383,17 @@ public class MainController extends Application {
         if (detailBooksCheckedOut.getText().equals("2")) {
             wBook = "Book3";
             wDateX = "DateCheckedOutBook3";
-            databaseManager.checkOutBook(selectedBook, detailName.getText(), wBook, wDateX, dateFr);
+            databaseManager.checkOutBook(selectedBook, currentStudent, wBook, wDateX, dateFr);
         }
         if (detailBooksCheckedOut.getText().equals("1")) {
             wBook = "Book2";
             wDateX = "DateCheckedOutBook2";
-            databaseManager.checkOutBook(selectedBook, detailName.getText(), wBook, wDateX, dateFr);
+            databaseManager.checkOutBook(selectedBook, currentStudent, wBook, wDateX, dateFr);
         }
         if (detailBooksCheckedOut.getText().equals("0")) {
             wBook = "Book1";
             wDateX = "DateCheckedOutBook1";
-            databaseManager.checkOutBook(selectedBook, detailName.getText(), wBook, wDateX, dateFr);
+            databaseManager.checkOutBook(selectedBook, currentStudent, wBook, wDateX, dateFr);
         }
         Notifications.create()
                 .title("Checked Out: " + selectedBook)
@@ -624,5 +595,8 @@ public class MainController extends Application {
             cell.setCellValue((Integer) value);
         }
 
+    }
+
+    public void initialize(KeyEvent keyEvent) {
     }
 }

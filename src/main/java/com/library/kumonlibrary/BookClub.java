@@ -18,10 +18,10 @@ public class BookClub {
     private String level;
     private boolean active;
 
-    public BookClub(String bookName, String authorName, int totalAmt, int amtAvailable, String level, String checkedOutBy, String dateCheckedOut) {
+    public BookClub(String bookName,int totalAmt, int amtAvailable, String level, String checkedOutBy, String dateCheckedOut) {
         this.id = id;
         this.bookName = bookName;
-        this.authorName = authorName;
+        //this.authorName = authorName;
         this.totalAmt = totalAmt;
         this.amtAvailable = amtAvailable;
         this.level = level;

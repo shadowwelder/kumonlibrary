@@ -26,23 +26,11 @@ public class DatabaseManager {
     private Connection connection;
 
     public DatabaseManager() {
-//        this.connection = null;
-//        try {
-//            if (!databaseFile.exists()) {
-//                databaseFile.getParentFile().mkdirs();
-//                databaseFile.createNewFile();
-//            }
-//            connectDB().prepareStatement("CREATE TABLE IF NOT EXISTS users(Name varchar(30), MemberSince varchar(15), DOB varchar(15), Address varchar(50), PhoneNumber varchar(15), BooksCheckedOut int, Book1 varchar(100), Book2 varchar(100), Book3 varchar(100), id int UNIQUE AUTO_INCREMENT);").executeUpdate();
-//            connectDB().prepareStatement("CREATE TABLE IF NOT EXISTS books(Name varchar(100), AuthorName varchar(40), TotalAmount int, AmountAvailable int, id int UNIQUE AUTO_INCREMENT);").executeUpdate();
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
     }
 
     public Connection connectDB() {
         try {
-            return getConnection("jdbc:mysql://192.168.1.169:3306/library", "shadowwelder", "224668Jh");
+            return getConnection("jdbc:mysql://192.168.1.132:3306/library", "jafar", "123456");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,13 +47,6 @@ public class DatabaseManager {
 
             while (rs.next()) {
                 userData.add(rs.getString("Name"));
-                userData.add(rs.getString("MemberSince"));
-                userData.add(rs.getString("DOB"));
-                userData.add(rs.getString("Address"));
-                userData.add(rs.getString("PhoneNumber"));
-                userData.add(rs.getString("Email"));
-                userData.add(rs.getString("StudentID"));
-                userData.add(rs.getString("Level"));
                 userData.add(rs.getString("BooksCheckedOut"));
                 userData.add(rs.getString("Book1"));
                 userData.add(rs.getString("DateCheckedOutBook1"));
@@ -73,10 +54,8 @@ public class DatabaseManager {
                 userData.add(rs.getString("DateCheckedOutBook2"));
                 userData.add(rs.getString("Book3"));
                 userData.add(rs.getString("DateCheckedOutBook3"));
-
             }
             System.out.println(userData);
-            //return FirstName;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -99,17 +78,10 @@ public class DatabaseManager {
         return users;
     }
 
-    public void newUserCreation(String newUserName, String newUserSince, String newUserDOB, String newUserAddress, String newUserPhone, String newUserEmail, String newUserID, String newUserLevel) throws SQLException {
+    public void newUserCreation(String newUserName) throws SQLException {
         try {
-            PreparedStatement ps = connectDB().prepareStatement("INSERT INTO users (Name, MemberSince, DOB, Address, PhoneNumber, Email, StudentID, level, BooksCheckedOut, Book1, DateCheckedOutBook1, ReturnDateBook1, Book2, DateCheckedOutBook2, ReturnDateBook2, Book3, DateCheckedOutBook3, ReturnDateBook3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')");
+            PreparedStatement ps = connectDB().prepareStatement("INSERT INTO users (Name, BooksCheckedOut, Book1, DateCheckedOutBook1, Book2, DateCheckedOutBook2, Book3, DateCheckedOutBook3) VALUES (?, 0, ' ', ' ', ' ', ' ', ' ', ' ')");
             ps.setString(1, newUserName);
-            ps.setString(2,newUserSince);
-            ps.setString(3, newUserDOB);
-            ps.setString(4, newUserAddress);
-            ps.setString(5, newUserPhone);
-            ps.setString(6, newUserEmail);
-            ps.setString(7, newUserID);
-            ps.setString(8, newUserLevel);
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -168,13 +140,13 @@ public class DatabaseManager {
 
             while (rs.next()){
                 //searchedBookList.add(rs.getString("Name"));
-                BookClub book = new BookClub(rs.getString("name"), rs.getString("authorname"), rs.getInt("totalamount"), rs.getInt("amountavailable"), rs.getString("level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
+                BookClub book = new BookClub(rs.getString("name"), rs.getInt("totalamount"), rs.getInt("amountavailable"), rs.getString("level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
                 searchedBookList.add(book);
             }
 
             while (rsa.next()){
                 //searchedBookList.add(rs.getString("Name"));
-                BookClub book = new BookClub(rsa.getString("name"), rsa.getString("authorname"), rsa.getInt("totalamount"), rsa.getInt("amountavailable"), rsa.getString("level"), rsa.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
+                BookClub book = new BookClub(rsa.getString("name"), rsa.getInt("totalamount"), rsa.getInt("amountavailable"), rsa.getString("level"), rsa.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
                 searchedBookList.add(book);
             }
         } catch (SQLException e) {
@@ -189,7 +161,7 @@ public class DatabaseManager {
         ResultSet rs = ps.executeQuery();
 
         while(rs.next()){
-            BookClub book = new BookClub(rs.getString("name"), rs.getString("authorname"), rs.getInt("totalamount"), rs.getInt("amountavailable"), rs.getString("level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
+            BookClub book = new BookClub(rs.getString("Name"), rs.getInt("TotalAmount"), rs.getInt("AmountAvailable"), rs.getString("Level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
             bookList.add(book);
         }
         System.out.println(bookList);
@@ -290,7 +262,7 @@ public class DatabaseManager {
         ps.setString(1, chosenLevel);
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
-            BookClub book = new BookClub(rs.getString("name"), rs.getString("authorname"), rs.getInt("totalamount"), rs.getInt("amountavailable"), rs.getString("level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
+            BookClub book = new BookClub(rs.getString("name"), rs.getInt("totalamount"), rs.getInt("amountavailable"), rs.getString("level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
             books.add(book);
             System.out.println(books);
         }
