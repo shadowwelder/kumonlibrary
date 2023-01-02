@@ -205,38 +205,6 @@ public class MainController extends Application {
         stage.setResizable(false);
         stage.show();
 
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            initialize(event);
-        });
-    }
-
-    public void initialize(KeyEvent event){
-
-
-            long now = Instant.now().toEpochMilli();
-
-            // events must come fast enough to separate from manual input
-            if (now - this.lastEventTimeStamp > this.threshold) {
-                barcode.delete(0, barcode.length());
-            }
-            this.lastEventTimeStamp = now;
-
-            if (event.getCode() == KeyCode.ENTER) {
-                if (barcode.length() == 10 || barcode.length() == 13) {
-                    System.out.println("barcode: " + barcode);
-                    System.out.println(detailAddress.getText());
-                }
-                if (barcode.length() >= 15) {
-                    System.out.println("Student ID: " + barcode);
-                }
-                barcode.delete(0, barcode.length());
-            } else {
-                barcode.append(event.getText());
-            }
-            event.consume();
-            System.out.println("Key pressed" + event.getCode());
-            System.out.println(detailAddress.getText());
-
     }
 
     @FXML
@@ -252,13 +220,13 @@ public class MainController extends Application {
     }
 
     @FXML
-    public void onViewUsers() throws IOException {
+    public void onViewUsers() {
         ObservableList<String> users = FXCollections.observableArrayList(this.databaseManager.userList());
         userListView.setItems(users);
     }
 
     @FXML
-    public void onSelectUser() throws IOException, SQLException {
+    public void onSelectUser() throws SQLException {
         onReturnHome();
         String selectedItem = userListView.getSelectionModel().getSelectedItem();
         System.out.println(selectedItem);
@@ -293,7 +261,7 @@ public class MainController extends Application {
 
 
     @FXML
-    public void onCompleteSignUp() throws SQLException, IOException {
+    public void onCompleteSignUp() throws SQLException {
 
         String newUserName = signUpFirstName.getText();
         String newSignUpDOB = brandNewSignUpDOB.getText();
@@ -337,7 +305,7 @@ public class MainController extends Application {
     }
 
     @FXML
-    public void onDelete() throws SQLException, IOException {
+    public void onDelete() throws SQLException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText(null);
@@ -357,7 +325,7 @@ public class MainController extends Application {
     }
 
     @FXML
-    private void onViewCheckedOut() throws SQLException {
+    private void onViewCheckedOut() {
         tableStackPane.getChildren().clear();
         tableStackPane.getChildren().add(checkedOutBooks);
 
@@ -369,7 +337,7 @@ public class MainController extends Application {
     }
 
     @FXML
-    private void onReturnBook() throws SQLException, IOException {
+    private void onReturnBook() throws SQLException {
         String selectedItem = checkedOutBookList.getSelectionModel().getSelectedItem();
         String thing1 = databaseManager.getCheckedOutBooks(detailName.getText()).get(0);
         String thing2 = databaseManager.getCheckedOutBooks(detailName.getText()).get(1);
@@ -409,7 +377,6 @@ public class MainController extends Application {
     @FXML
     private void onSearchUsers() throws SQLException {
         String searchKeyword = search.getText();
-        //databaseManager.searchUser(searchKeyword);
         ObservableList<String> users = FXCollections.observableArrayList(this.databaseManager.searchUser(searchKeyword));
         userListView.setItems(users);
     }
@@ -581,41 +548,6 @@ public class MainController extends Application {
         }
     }
 
-    final StringBuffer barcode = new StringBuffer();
-    long lastEventTimeStamp = 0L;
-    long threshold = 100;
-    final int minBarcodeLength = 8;
-
-//    @FXML
-//    public void initialize(URL url, ResourceBundle resourceBundle){
-//
-//        Scene scene = this.welcomeLabel.getScene();
-//        scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-//            long now = Instant.now().toEpochMilli();
-//
-//            // events must come fast enough to separate from manual input
-//            if (now - this.lastEventTimeStamp > this.threshold) {
-//                barcode.delete(0, barcode.length());
-//            }
-//            this.lastEventTimeStamp = now;
-//
-//            if (event.getCode() == KeyCode.ENTER) {
-//                if (barcode.length() == 10 || barcode.length() == 13) {
-//                    System.out.println("barcode: " + barcode);
-//                    System.out.println(detailAddress.getText());
-//                }
-//                if (barcode.length() >= 15) {
-//                    System.out.println("Student ID: " + barcode);
-//                }
-//                barcode.delete(0, barcode.length());
-//            } else {
-//                barcode.append(event.getText());
-//            }
-//            event.consume();
-//            System.out.println("Key pressed" + event.getCode());
-//            System.out.println(detailAddress.getText());
-//        });
-//    }
 
     @FXML
     private void onSearchBook1() throws SQLException {
