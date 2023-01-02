@@ -205,38 +205,6 @@ public class MainController extends Application {
         stage.setResizable(false);
         stage.show();
 
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            initialize(event);
-        });
-    }
-
-    public void initialize(KeyEvent event){
-
-
-            long now = Instant.now().toEpochMilli();
-
-            // events must come fast enough to separate from manual input
-            if (now - this.lastEventTimeStamp > this.threshold) {
-                barcode.delete(0, barcode.length());
-            }
-            this.lastEventTimeStamp = now;
-
-            if (event.getCode() == KeyCode.ENTER) {
-                if (barcode.length() == 10 || barcode.length() == 13) {
-                    System.out.println("barcode: " + barcode);
-                    System.out.println(detailAddress.getText());
-                }
-                if (barcode.length() >= 15) {
-                    System.out.println("Student ID: " + barcode);
-                }
-                barcode.delete(0, barcode.length());
-            } else {
-                barcode.append(event.getText());
-            }
-            event.consume();
-            System.out.println("Key pressed" + event.getCode());
-            System.out.println(detailAddress.getText());
-
     }
 
     @FXML
