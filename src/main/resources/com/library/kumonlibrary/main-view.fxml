@@ -66,7 +66,6 @@
           <items>
                   <MenuItem fx:id="addBookMenu" mnemonicParsing="false" onAction="#onAddBookMenu" text="Add Books" />
             <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
-                  <MenuItem mnemonicParsing="false" onAction="#onSetStuff" text="setStuff" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Inventory">
@@ -225,35 +224,28 @@
                   </VBox>
                   <VBox fx:id="userViewVbox" layoutX="10.0" layoutY="10.0" prefHeight="520.0" prefWidth="442.0" style="-fx-background-color: #c9eff8;">
                      <children>
-                        <Label alignment="TOP_LEFT" style="&#10;" text="Main View" textAlignment="CENTER" wrapText="false">
-                           <font>
-                              <Font size="18.0" fx:id="x51" />
-                           </font>
-                           <textFill>
-                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x61" />
-                           </textFill>
-                           <VBox.margin>
-                              <Insets left="5.0" />
-                           </VBox.margin>
-                        </Label>
                         <Separator opacity="0.0" prefWidth="200.0" />
-                        <Text fx:id="welcomeLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME!">
+                        <Text fx:id="welcomeLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="No student selected" wrappingWidth="560.8799896240234">
                            <font>
-                              <Font name="Bangla MN" size="18.0" />
+                              <Font name="Helvetica Neue" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="5.0" />
                            </VBox.margin>
                         </Text>
-                        <Polygon fill="#0f4e8a" points="432.706298828125, -46.76057434082031, 374.91668701171875, -60.0, 0.0, -60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <VBox prefHeight="30.0" prefWidth="567.0">
+                           <children>
+                              <Polygon fill="#0f4e8a" points="432.706298828125, -46.76057434082031, 374.91668701171875, -60.0, 0.0, -46.76057434082031" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                           </children>
+                        </VBox>
                         <ButtonBar buttonMinWidth="30.0" prefHeight="40.0" prefWidth="200.0">
                           <buttons>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books checked out:" wrappingWidth="141.03125">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books checked out:" wrappingWidth="143.03125">
                                  <font>
-                                    <Font name="Kohinoor Bangla" size="16.0" />
+                                    <Font name="Helvetica" size="16.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="detailBooksCheckedOut" strokeType="OUTSIDE" strokeWidth="0.0" text="X" wrappingWidth="12.407999992370605">
+                              <Text fx:id="detailBooksCheckedOut" strokeType="OUTSIDE" strokeWidth="0.0" text="X" wrappingWidth="47.407999992370605">
                                  <font>
                                     <Font name="Kohinoor Bangla" size="16.0" />
                                  </font>
@@ -278,7 +270,7 @@
                            <buttons>
                               <CustomTextField fx:id="searchBooks" maxWidth="339.0" minWidth="51.0" prefHeight="26.0" prefWidth="243.0" promptText="Search Books" style="-fx-background-color: #ffffff;" stylesheets="@textfield.css" />
                               <JFXButton fx:id="searchBooksButton" maxWidth="133.0" onAction="#onSearchBook" prefHeight="26.0" prefWidth="583.0" style="-fx-background-color: #5ed2ff;" text="Search" />
-                              <JFXComboBox fx:id="levels" focusColor="#7284ba00" maxWidth="118.0" onAction="#onLevel" prefHeight="26.0" promptText="Level" style="-fx-background-color: #5ed2ff;" stylesheets="@combobox.css" unFocusColor="#4d4d4d00" />
+                              <JFXComboBox fx:id="levels" focusColor="#7284ba00" maxWidth="118.0" onAction="#onLevel" prefHeight="26.0" promptText="  Level" style="-fx-background-color: #5ed2ff;" stylesheets="@combobox.css" unFocusColor="#4d4d4d00" />
                            </buttons>
                            <VBox.margin>
                               <Insets />
@@ -317,9 +309,10 @@
                                     </VBox>
                                     <TableView fx:id="books" editable="true" prefHeight="335.0" prefWidth="437.0" stylesheets="@table.css">
                                       <columns>
-                                        <TableColumn fx:id="colBookName" prefWidth="286.5" text="Book Name" />
-                                          <TableColumn fx:id="colAmountAvailable" minWidth="0.0" prefWidth="184.0" text="In Stock   " />
-                                          <TableColumn fx:id="colLevel" prefWidth="85.5" text="Level" />
+                                        <TableColumn fx:id="colBookName" prefWidth="316.0536651611328" text="Book Name" />
+                                          <TableColumn fx:id="colTotalQuantity" minWidth="0.0" prefWidth="99.94635009765625" text="Total Quantity" />
+                                          <TableColumn fx:id="colAmountAvailable" minWidth="0.0" prefWidth="68.93130493164062" text="In Stock   " />
+                                          <TableColumn fx:id="colLevel" prefWidth="55.0" text="Level" />
                                       </columns>
                                        <StackPane.margin>
                                           <Insets left="5.0" right="5.0" />
@@ -339,15 +332,11 @@
                                           <Insets right="5.0" />
                                        </HBox.margin>
                                     </JFXButton>
+                                    <Separator opacity="0.0" prefHeight="31.0" prefWidth="150.0" />
                                     <TextField fx:id="editBookTextField" prefHeight="26.0" prefWidth="163.0" stylesheets="@textfield.css" />
                                     <JFXButton minWidth="15.0" onAction="#onEditBookName" prefHeight="26.0" prefWidth="79.0" style="-fx-background-color: #5ed2ff;" text="Edit Name">
                                        <HBox.margin>
                                           <Insets left="5.0" right="5.0" />
-                                       </HBox.margin>
-                                    </JFXButton>
-                                    <JFXButton minWidth="15.0" onAction="#onEditAuthorName" prefHeight="26.0" prefWidth="81.0" style="-fx-background-color: #5ed2ff;" text="Edit Author">
-                                       <HBox.margin>
-                                          <Insets right="5.0" />
                                        </HBox.margin>
                                     </JFXButton>
                                     <JFXButton minWidth="15.0" onAction="#onDeleteBook" prefHeight="26.0" prefWidth="89.0" style="-fx-background-color: #5ed2ff;" text="Delete Book">

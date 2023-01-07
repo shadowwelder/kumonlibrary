@@ -40,7 +40,7 @@ public class DatabaseManager {
     public List<String> userSelected(String selectedItem) {
         List<String> userData= new ArrayList<>();
         try {
-            System.out.println(selectedItem);
+            //System.out.println(selectedItem);
             PreparedStatement ps = connectDB().prepareStatement("SELECT * FROM users WHERE Name = ?");
             ps.setString(1, selectedItem);
             ResultSet rs = ps.executeQuery();
@@ -55,7 +55,7 @@ public class DatabaseManager {
                 userData.add(rs.getString("Book3"));
                 userData.add(rs.getString("DateCheckedOutBook3"));
             }
-            System.out.println(userData);
+            //System.out.println(userData);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -107,7 +107,7 @@ public class DatabaseManager {
         PreparedStatement ps = connectDB().prepareStatement("DELETE FROM users WHERE Name = ?");
         ps.setString(1, updateName);
         ps.executeUpdate();
-        System.out.println(updateName);
+        //System.out.println(updateName);
     }
 
     public List<String> searchUser(String searchKeyword) throws SQLException {
@@ -116,7 +116,7 @@ public class DatabaseManager {
             PreparedStatement ps = connectDB().prepareStatement("SELECT * FROM users WHERE Name LIKE ? ");
             ps.setString(1, "%" + searchKeyword + "%");
             ResultSet rs = ps.executeQuery();
-            System.out.println(ps);
+            //System.out.println(ps);
 
             while (rs.next()){
                 searchedUser.add(rs.getString("Name"));
@@ -131,12 +131,12 @@ public class DatabaseManager {
         ObservableList<BookClub> searchedBookList = FXCollections.observableArrayList();
         try {
             PreparedStatement ps = connectDB().prepareStatement("SELECT * FROM books WHERE Name LIKE ? ");
-            PreparedStatement psa = connectDB().prepareStatement("SELECT * FROM books WHERE ISBN = ?");
+            //PreparedStatement psa = connectDB().prepareStatement("SELECT * FROM books WHERE ISBN = ?");
             ps.setString(1, "%" + searchKeyword + "%");
-            psa.setString(1, searchKeyword);
+            //psa.setString(1, searchKeyword);
             ResultSet rs = ps.executeQuery();
-            ResultSet rsa = psa.executeQuery();
-            System.out.println(psa);
+            //ResultSet rsa = psa.executeQuery();
+            //System.out.println(psa);
 
             while (rs.next()){
                 //searchedBookList.add(rs.getString("Name"));
@@ -144,11 +144,11 @@ public class DatabaseManager {
                 searchedBookList.add(book);
             }
 
-            while (rsa.next()){
-                //searchedBookList.add(rs.getString("Name"));
-                BookClub book = new BookClub(rsa.getString("name"), rsa.getInt("totalamount"), rsa.getInt("amountavailable"), rsa.getString("level"), rsa.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
-                searchedBookList.add(book);
-            }
+//            while (rsa.next()){
+//                //searchedBookList.add(rs.getString("Name"));
+//                BookClub book = new BookClub(rsa.getString("name"), rsa.getInt("totalamount"), rsa.getInt("amountavailable"), rsa.getString("level"), rsa.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
+//                searchedBookList.add(book);
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -164,7 +164,7 @@ public class DatabaseManager {
             BookClub book = new BookClub(rs.getString("Name"), rs.getInt("TotalAmount"), rs.getInt("AmountAvailable"), rs.getString("Level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
             bookList.add(book);
         }
-        System.out.println(bookList);
+        //System.out.println(bookList);
         return bookList;
     }
 
@@ -185,7 +185,7 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(checkedOutBooksList);
+        //System.out.println(checkedOutBooksList);
         return checkedOutBooksList;
     }
 
@@ -204,13 +204,13 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(checkedOutDatesList);
+        //System.out.println(checkedOutDatesList);
         return checkedOutDatesList;
     }
 
     public void returnBook(String book, String date, String name, String selectedItem) throws SQLException {
         PreparedStatement ps = connectDB().prepareStatement("UPDATE users SET " + book + " = ' ' WHERE name = ?");
-        PreparedStatement psa = connectDB().prepareStatement("UPDATE Users SET " + date + "= ' ' WHERE name = ?");
+        PreparedStatement psa = connectDB().prepareStatement("UPDATE users SET " + date + "= ' ' WHERE name = ?");
         PreparedStatement psb = connectDB().prepareStatement("UPDATE users SET BooksCheckedOut = IF (BooksCheckedOut > 0, BooksCheckedOut-1, BooksCheckedOut) WHERE name = ?;");
         PreparedStatement psc = connectDB().prepareStatement("UPDATE books SET AmountAvailable = AmountAvailable+1 WHERE name = ? ");
         PreparedStatement psd = connectDB().prepareStatement("UPDATE books SET CheckedOutBy = REPLACE (CheckedOutBy, ? ' ', '') WHERE name = ?");
@@ -253,7 +253,7 @@ public class DatabaseManager {
         psc.execute();
         psd.execute();
         pse.execute();
-        System.out.println("yay");
+        //System.out.println("yay");
     }
 
     public ObservableList<BookClub> onLevelSelected(String chosenLevel) throws SQLException {
@@ -264,7 +264,7 @@ public class DatabaseManager {
         while (rs.next()){
             BookClub book = new BookClub(rs.getString("name"), rs.getInt("totalamount"), rs.getInt("amountavailable"), rs.getString("level"), rs.getString("CheckedOutBy"), rs.getString("DateCheckedOut"));
             books.add(book);
-            System.out.println(books);
+            //System.out.println(books);
         }
         return books;
     }

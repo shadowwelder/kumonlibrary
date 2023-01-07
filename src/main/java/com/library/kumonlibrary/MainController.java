@@ -11,6 +11,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +25,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 
@@ -141,6 +144,9 @@ public class MainController extends Application {
     private TableColumn<BookClub, String> colLevel;
 
     @FXML
+    private TableColumn<BookClub, String> colTotalQuantity;
+
+    @FXML
     private StackPane tableStackPane;
 
     @FXML
@@ -193,7 +199,11 @@ public class MainController extends Application {
 
     String updateName;
 
+    FileChooser fileChooser = new FileChooser();
+    String fileOutput = "";
+
     //public String selectedUser;
+    Stage stage1 = new Stage();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -206,9 +216,14 @@ public class MainController extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
+        stage1 = stage;
     }
 
+    @FXML
+    public void initialize() throws SQLException {
+        onSetStuff();
+        onViewUsers();
+    }
     @FXML
     private void onNewUser() {
         stackPane.getChildren().clear();
@@ -231,7 +246,7 @@ public class MainController extends Application {
     public void onSelectUser() throws SQLException {
         onReturnHome();
         String selectedItem = userListView.getSelectionModel().getSelectedItem();
-        System.out.println(selectedItem);
+        //System.out.println(selectedItem);
         StringBuilder sb = new StringBuilder();
         List<String> userData = this.databaseManager.userSelected(selectedItem);
         sb.append(userData.get(0));
@@ -267,7 +282,7 @@ public class MainController extends Application {
         String updateEmail = detailEmail.getText();
         String updatePhone = detailPhoneNumber.getText();
         String updateLevel = (String) detailLevel.getValue();
-        System.out.println(updateLevel);
+        //System.out.println(updateLevel);
 
         Notifications.create()
                 .title("Edits Made")
@@ -339,7 +354,7 @@ public class MainController extends Application {
 
         ObservableList<BookClub> bookList = databaseManager.getBooks();
         colBookName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("bookName"));
-        //colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
+        colTotalQuantity.setCellValueFactory(new PropertyValueFactory<BookClub, String>("totalAmt"));
         colAmountAvailable.setCellValueFactory(new PropertyValueFactory<BookClub, Integer>("amtAvailable"));
         colLevel.setCellValueFactory(new PropertyValueFactory<BookClub, String>("level"));
         books.setItems(bookList);
@@ -357,7 +372,7 @@ public class MainController extends Application {
         String searchKeyword = searchBooks.getText();
         ObservableList<BookClub> bookList = databaseManager.searchBooks(searchKeyword);
         colBookName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
-        colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
+        //colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
         colAmountAvailable.setCellValueFactory(new PropertyValueFactory<BookClub, Integer>("amtAvailable"));
         colLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
         books.setItems(bookList);
@@ -366,7 +381,7 @@ public class MainController extends Application {
     @FXML
     private void onCheckOut() throws SQLException, IOException {
         //String bco = userData.get(6);
-        System.out.println(detailBooksCheckedOut.getText());
+        //System.out.println(detailBooksCheckedOut.getText());
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/uuuu");
         String dateFr = dtf.format(localDate);
@@ -395,9 +410,9 @@ public class MainController extends Application {
             wDateX = "DateCheckedOutBook1";
             databaseManager.checkOutBook(selectedBook, currentStudent, wBook, wDateX, dateFr);
         }
-        Notifications.create()
-                .title("Checked Out: " + selectedBook)
-                .showInformation();
+//        Notifications.create()
+//                .title("Checked Out: " + selectedBook)
+//                .showInformation();
         onSelectUser();
         onBrowse();
     }
@@ -422,20 +437,20 @@ public class MainController extends Application {
         ObservableList readingLevels = FXCollections.observableArrayList("7A", "6A", "5A", "4A", "3A", "2A", "AI", "AII", "BI", "BII", "CI", "CII", "DI", "DII", "EI", "EII", "FI", "FII", "G", "H", "I", "J", "K", "L");
 
         levels.setItems(readingLevels);
-        addBookLevel.setItems(readingLevels);
+        //addBookLevel.setItems(readingLevels);
         signUpLevel.setItems(readingLevels);
-        detailLevel.setItems(readingLevels);
+        //detailLevel.setItems(readingLevels);
         onBrowse();
     }
 
     @FXML
     private void onLevel() throws SQLException {
         String chosenLevel = (String) levels.getValue();
-        System.out.println(chosenLevel);
+        //System.out.println(chosenLevel);
         //databaseManager.onLevelSelected(chosenLevel);
         ObservableList<BookClub> bookList = databaseManager.onLevelSelected(chosenLevel);
         colBookName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
-        colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
+        //colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
         colAmountAvailable.setCellValueFactory(new PropertyValueFactory<BookClub, Integer>("amtAvailable"));
         colLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
         books.setItems(bookList);
@@ -519,18 +534,6 @@ public class MainController extends Application {
         }
     }
 
-
-    @FXML
-    private void onSearchBook1() throws SQLException {
-        String searchKeyword = searchBooks.getText();
-        ObservableList<BookClub> bookList = databaseManager.searchBooks(searchKeyword);
-        colBookName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
-        colAuthorName.setCellValueFactory(new PropertyValueFactory<BookClub, String>("authorName"));
-        colAmountAvailable.setCellValueFactory(new PropertyValueFactory<BookClub, Integer>("amtAvailable"));
-        colLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
-        books.setItems(bookList);
-    }
-
     @FXML
     private void onPrintCheckedOut() throws SQLException{
 //Create blank workbook
@@ -558,7 +561,7 @@ public class MainController extends Application {
         for (Inventory inventory : checkedOutBooks) {
             XSSFRow detailsRow = spreadsheet.createRow(rowNum++);
             int cellNum = 0;
-            System.out.println(inventory.getName() + inventory.getCheckedOutBy() + inventory.getDateCheckedOut());
+            //System.out.println(inventory.getName() + inventory.getCheckedOutBy() + inventory.getDateCheckedOut());
 
             writeIntoCell(detailsRow, inventory.getName(), cellNum++);
             writeIntoCell(detailsRow, inventory.getCheckedOutBy(), cellNum++);
@@ -568,11 +571,20 @@ public class MainController extends Application {
 
         try
         {
+            // get the file selected
+            fileChooser.setInitialFileName("Inventory");
+            File file = fileChooser.showSaveDialog(stage1);
+
+            if (file != null) {
+
+                fileOutput = file.getAbsolutePath();
+                System.out.println(fileOutput);
+            }
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream("CheckedOutInventory.xlsx");
+            FileOutputStream out = new FileOutputStream(fileOutput+"-" + LocalDate.now() +".xlsx");
             workbook.write(out);
             out.close();
-            System.out.println("CheckedOutInventory.xlsx written successfully on disk.");
+            //System.out.println("CheckedOutInventory.xlsx written successfully on disk.");
         }
         catch (Exception e)
         {
@@ -595,8 +607,5 @@ public class MainController extends Application {
             cell.setCellValue((Integer) value);
         }
 
-    }
-
-    public void initialize(KeyEvent keyEvent) {
     }
 }

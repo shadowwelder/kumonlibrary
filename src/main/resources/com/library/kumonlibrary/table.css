@@ -2,6 +2,11 @@
     -fx-background-color: #4ba8cc
     }
 
+.table-view .column-header-background .filler {
+    -fx-background-color: #4ba8cc;
+    -fx-padding: 1em;
+}
+
 .table-view .column-header {
     -fx-background-color: transparent;
 }
@@ -11,12 +16,12 @@
     -fx-padding: 2 0 2 10px;
 }
 
-.table-row-cell: odd{
+.table-row-cell:odd{
     -fx-background-color: #cff2ff;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
-.table-row-cell: even{
+.table-row-cell:even{
     -fx-background-color:#afe9ff;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
