@@ -213,14 +213,15 @@ public class DatabaseManager {
         PreparedStatement psa = connectDB().prepareStatement("UPDATE users SET " + date + "= ' ' WHERE name = ?");
         PreparedStatement psb = connectDB().prepareStatement("UPDATE users SET BooksCheckedOut = IF (BooksCheckedOut > 0, BooksCheckedOut-1, BooksCheckedOut) WHERE name = ?;");
         PreparedStatement psc = connectDB().prepareStatement("UPDATE books SET AmountAvailable = AmountAvailable+1 WHERE name = ? ");
-        PreparedStatement psd = connectDB().prepareStatement("UPDATE books SET CheckedOutBy = REPLACE (CheckedOutBy, ? ' ', '') WHERE name = ?");
+        PreparedStatement psd = connectDB().prepareStatement("UPDATE books SET CheckedOutBy = REPLACE (CheckedOutBy, ? ' on '? , '') WHERE name = ?");
 
         ps.setString(1, name);
         psa.setString(1, name);
         psb.setString(1, name);
         psc.setString(1, selectedItem);
         psd.setString(1, name);
-        psd.setString(2, selectedItem);
+        psd.setString(2, date);
+        psd.setString(3, selectedItem);
         ps.execute();
         psa.execute();
         psb.execute();
@@ -235,7 +236,7 @@ public class DatabaseManager {
         PreparedStatement psa = connectDB().prepareStatement("UPDATE users SET " + wBook + "= ? WHERE name = ?");
         PreparedStatement psb = connectDB().prepareStatement("UPDATE users SET BooksCheckedOut = BooksCheckedOut+1 WHERE name = ?");
         PreparedStatement psc = connectDB().prepareStatement("UPDATE users SET " + wDateX + " = ? WHERE name = ?");
-        PreparedStatement psd = connectDB().prepareStatement("UPDATE books SET CheckedOutBy = CONCAT(CheckedOutBy, ? ' ') WHERE name = ?");
+        PreparedStatement psd = connectDB().prepareStatement("UPDATE books SET CheckedOutBy = CONCAT(CheckedOutBy, ? ' on "+wDate+" ') WHERE name = ?");
         PreparedStatement pse = connectDB().prepareStatement("Update books SET DateCheckedOut = ? WHERE name = ?");
         ps.setString(1, book);
         psa.setString(1, book);
@@ -244,6 +245,7 @@ public class DatabaseManager {
         psc.setString(1, wDate);
         psc.setString(2, name);
         psd.setString(1, name);
+        //psd.setString(2, wDate);
         psd.setString(2, book);
         pse.setString(1, wDate);
         pse.setString(2, book);
@@ -269,14 +271,13 @@ public class DatabaseManager {
         return books;
     }
 
-    public void onAddBook(String bookName, String authorName, String level, String quantity, String ISBN) throws SQLException {
-        PreparedStatement ps = connectDB().prepareStatement("INSERT INTO books (Name, AuthorName, level, TotalAmount, AmountAvailable, ISBN, CheckedOutBy) VALUES (?, ?, ?, ?, ?, ?, '')");
+    public void onAddBook(String bookName, String level, String quantity) throws SQLException {
+        PreparedStatement ps = connectDB().prepareStatement("INSERT INTO books (Name, level, TotalAmount, AmountAvailable, CheckedOutBy) VALUES (?, ?, ?, ?, '')");
         ps.setString(1, bookName);
-        ps.setString(2, authorName);
-        ps.setString(3, level);
+        ps.setString(2, level);
+        ps.setString(3, quantity);
         ps.setString(4, quantity);
-        ps.setString(5, quantity);
-        ps.setString(6, ISBN);
+        //ps.setString(6, ISBN);
         ps.execute();
     }
 

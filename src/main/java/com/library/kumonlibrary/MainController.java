@@ -437,7 +437,7 @@ public class MainController extends Application {
         ObservableList readingLevels = FXCollections.observableArrayList("7A", "6A", "5A", "4A", "3A", "2A", "AI", "AII", "BI", "BII", "CI", "CII", "DI", "DII", "EI", "EII", "FI", "FII", "G", "H", "I", "J", "K", "L");
 
         levels.setItems(readingLevels);
-        //addBookLevel.setItems(readingLevels);
+        addBookLevel.setItems(readingLevels);
         signUpLevel.setItems(readingLevels);
         //detailLevel.setItems(readingLevels);
         onBrowse();
@@ -464,7 +464,7 @@ public class MainController extends Application {
 
     @FXML
     private void onAddBooksButton() throws SQLException {
-        databaseManager.onAddBook(addBookName.getText(), addBookAuthor.getText(), (String) addBookLevel.getValue(), addBookQuantity.getText(), addBookISBN.getText());
+        databaseManager.onAddBook(addBookName.getText(), (String) addBookLevel.getValue(), addBookQuantity.getText());
         Notifications.create()
                 .title("Book Added: " + addBookName.getText())
                 .showInformation();

@@ -132,54 +132,6 @@
             </VBox>
             <StackPane fx:id="stackPane" prefHeight="569.0" prefWidth="455.0">
                <children>
-                  <VBox fx:id="addBook" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #b2e1f5;">
-                     <children>
-                        <HBox prefHeight="33.0" prefWidth="502.0">
-                           <children>
-                              <Label prefHeight="50.0" prefWidth="88.0" text="Add Books" textFill="#9f9f9f">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="27.0" prefWidth="502.0" />
-                        <HBox prefHeight="35.0" prefWidth="502.0">
-                           <children>
-                              <Label prefHeight="35.0" prefWidth="83.0" text="  Name: ">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="addBookName" prefHeight="26.0" prefWidth="402.0" stylesheets="@textfield.css">
-                                 <HBox.margin>
-                                    <Insets top="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="24.0" prefWidth="502.0">
-                           <children>
-                              <Label prefHeight="38.0" prefWidth="84.0" text="  Quantity:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="addBookQuantity" prefHeight="26.0" prefWidth="27.0" stylesheets="@textfield.css" />
-                           </children>
-                        </HBox>
-                        <JFXButton onAction="#onAddBooksButton" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #5ed2ff;" text="Confirm">
-                           <VBox.margin>
-                              <Insets left="201.0" top="5.0" />
-                           </VBox.margin>
-                        </JFXButton>
-                        <JFXButton onAction="#onReturnHome" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #5ed2ff;" text="Back to Home">
-                           <VBox.margin>
-                              <Insets left="201.0" top="10.0" />
-                           </VBox.margin>
-                        </JFXButton>
-                     </children>
-                  </VBox>
                   <VBox fx:id="signUpVbox" prefHeight="520.0" prefWidth="442.0" style="-fx-background-color: #e0f6ff;">
                      <children>
                 <Label alignment="TOP_LEFT" style="&#10;" text="Student Sign Up" textAlignment="CENTER" wrapText="false">
@@ -352,6 +304,61 @@
                               <HBox prefHeight="32.0" prefWidth="502.0" />
                            </children>
                         </VBox>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="addBook" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #b2e1f5;">
+                     <children>
+                        <HBox prefHeight="33.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="50.0" prefWidth="88.0" text="Add Books" textFill="#9f9f9f">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="35.0" prefWidth="83.0" text="  Name: ">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="addBookName" prefHeight="26.0" prefWidth="402.0" stylesheets="@textfield.css">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="24.0" prefWidth="502.0">
+                           <children>
+                              <Label prefHeight="38.0" prefWidth="84.0" text="  Quantity:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="addBookQuantity" prefHeight="26.0" prefWidth="27.0" stylesheets="@textfield.css" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <JFXComboBox fx:id="addBookLevel" focusColor="#7284ba00" maxWidth="118.0" onAction="#onLevel" prefHeight="26.0" promptText="  Level" style="-fx-background-color: #5ed2ff;" stylesheets="@combobox.css" unFocusColor="#4d4d4d00" />
+                           </children>
+                           <padding>
+                              <Insets left="8.0" top="5.0" />
+                           </padding>
+                        </HBox>
+                        <JFXButton onAction="#onAddBooksButton" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #5ed2ff;" text="Confirm">
+                           <VBox.margin>
+                              <Insets left="201.0" top="5.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton onAction="#onReturnHome" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #5ed2ff;" text="Back to Home">
+                           <VBox.margin>
+                              <Insets left="201.0" top="10.0" />
+                           </VBox.margin>
+                        </JFXButton>
                      </children>
                   </VBox>
                </children>
