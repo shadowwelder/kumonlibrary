@@ -18,6 +18,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -29,7 +33,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -39,9 +46,13 @@ import java.util.*;
 import java.io.PrintWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 
 
 import org.apache.poi.xssf.usermodel.*;
+
+import javax.imageio.ImageIO;
+import javax.xml.catalog.CatalogFeatures;
 
 public class MainController extends Application {
 
@@ -212,6 +223,16 @@ public class MainController extends Application {
         //MainController mainController = new MainController();
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("file:fish.png"));
+        String OS = System.getProperty("os.name").toLowerCase();
+
+        if (OS.contains("mac")) {
+
+            Taskbar taskbar = Taskbar.getTaskbar();
+            URL file = main.class.getResource("fish.png");
+            BufferedImage image = ImageIO.read(file);
+            taskbar.setIconImage(image);
+
+        }
         stage.setTitle("Library");
         stage.setScene(scene);
         stage.setResizable(false);

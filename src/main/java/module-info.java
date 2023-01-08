@@ -6,7 +6,9 @@ module com.library.kumonlibrary {
     requires java.sql;
     requires com.jfoenix;
     //requires org.apache.poi.poi;
-    requires poi.ooxml;
+    requires java.desktop;
+    requires org.apache.poi.ooxml;
+
 
     opens com.library.kumonlibrary to javafx.fxml;
     exports com.library.kumonlibrary;
