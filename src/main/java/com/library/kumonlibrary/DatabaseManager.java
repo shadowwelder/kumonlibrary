@@ -30,7 +30,7 @@ public class DatabaseManager {
 
     public Connection connectDB() {
         try {
-            return getConnection("jdbc:mysql://192.168.1.132:3306/library", "jafar", "123456");
+            return getConnection("jdbc:mysql://192.168.1.169:3306/library", "jafar", "123456");
         } catch (SQLException e) {
             e.printStackTrace();
         }

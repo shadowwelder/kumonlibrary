@@ -222,7 +222,7 @@ public class MainController extends Application {
         Parent root = fxmlLoader.load();
         //MainController mainController = new MainController();
         Scene scene = new Scene(root);
-        stage.getIcons().add(new Image("file:fish.png"));
+        stage.getIcons().add(new Image(main.class.getResourceAsStream("fish.png")));
         String OS = System.getProperty("os.name").toLowerCase();
 
         if (OS.contains("mac")) {
