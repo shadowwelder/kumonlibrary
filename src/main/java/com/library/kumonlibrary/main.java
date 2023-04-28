@@ -1,7 +1,7 @@
 /*
 Jafar Hashim
-CS50 AP
-May 18 2022
+AP CS-A | Cloud Computing
+April 27 2023
  */
 
 package com.library.kumonlibrary;
@@ -33,6 +33,6 @@ public class main {
 
 
         Application.launch(MainController.class);
-        new DatabaseManager();
+        //new DatabaseManager();
     }
 }

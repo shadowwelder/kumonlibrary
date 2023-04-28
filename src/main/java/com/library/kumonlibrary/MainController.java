@@ -1,7 +1,7 @@
 /*
 Jafar Hashim
-CS50 AP
-May 18 2022
+AP CS-A | Cloud Computing
+April 27 2023
  */
 
 package com.library.kumonlibrary;
@@ -216,6 +216,9 @@ public class MainController extends Application {
     //public String selectedUser;
     Stage stage1 = new Stage();
 
+    public MainController() throws SQLException {
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("main-view.fxml"));
@@ -410,7 +413,7 @@ public class MainController extends Application {
         String selectedBook = books.getSelectionModel().getSelectedItem().getBookName();
         String wBook;
         String wDateX;
-        if (books.getSelectionModel().getSelectedItem().getAmtAvailable() <= 0) {
+        if (books.getSelectionModel().getSelectedItem().getAmtAvailable() < 0) {
             return;
         }
         if (detailBooksCheckedOut.getText().equals("3")) {

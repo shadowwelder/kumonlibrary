@@ -1,7 +1,7 @@
 /*
 Jafar Hashim
-CS50 AP
-May 18 2022
+AP CS-A | Cloud Computing
+April 27 2023
  */
 
 package com.library.kumonlibrary;
@@ -25,12 +25,13 @@ public class DatabaseManager {
 
     private Connection connection;
 
-    public DatabaseManager() {
+    public DatabaseManager() throws SQLException {
+
     }
 
     public Connection connectDB() {
         try {
-            return getConnection("jdbc:mysql://192.168.1.169:3306/library", "jafar", "123456");
+            return getConnection("jdbc:mysql://plslibrary.canjytyserwn.us-east-2.rds.amazonaws.com:3306/library", "admin", "224668Jh");
         } catch (SQLException e) {
             e.printStackTrace();
         }
